@@ -23,5 +23,6 @@ if __name__ == "__main__":
 
     model = Model()
     optimizer = torch.optim.Adam(model.parameters())
-    trainer = Trainer(model, optimizer, train_dl, test_dl)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    trainer = Trainer(model, optimizer, train_dl, test_dl, device=device)
     trainer.train(args.num_epoch)

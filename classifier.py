@@ -49,6 +49,7 @@ class Trainer:
             self.device = torch.device('cpu')
         else:
             self.device = device
+        self.model.to(self.device)
 
     def run_epoch(self, dataloader, is_training=True):
         if is_training:
