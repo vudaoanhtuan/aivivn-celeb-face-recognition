@@ -19,15 +19,19 @@ class EmbedDataset(torch.utils.data.Dataset):
 
 
 class Model(nn.Module):
-    def __init__(self):
+    def __init__(self, dropout=0.4):
         super(Model, self).__init__()
         self.fc1 = nn.Linear(128, 512)
-        self.fc2 = nn.Linear(512, 1024)
-        self.fc3 = nn.Linear(1024, 1000)
+        self.fc2 = nn.Linear(512, 512)
+        self.fc3 = nn.Linear(512, 1000)
+        self.dropout_1 = nn.Dropout(dropout)
+        self.dropout_2 = nn.Dropout(dropout)
 
     def forward(self, x, label=None):
         x = F.relu(self.fc1(x))
+        x = self.dropout_1(x)
         x = F.relu(self.fc2(x))
+        x = self.dropout_2(x)
         out = self.fc3(x)
         if label is None:
             return F.softmax(out)
